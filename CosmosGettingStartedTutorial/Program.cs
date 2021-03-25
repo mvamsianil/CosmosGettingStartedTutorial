@@ -12,9 +12,9 @@ namespace CosmosGettingStartedTutorial
     public class Program
     {
         // The Azure Cosmos DB endpoint for running this sample.
-        private static readonly string EndpointUri = "https://66f5a9ab-0ee0-4-231-b9ee.documents.azure.com:443/";
+        private static readonly string EndpointUri = "<URI Endpoint>";
         // The primary key for the Azure Cosmos account.
-        private static readonly string PrimaryKey = "OVp8xSnHrcYT3LmIZfWTrHajPj0IHrSOop2n5l1MfJqzkFgEfKWkZ4eTwKvRlfQKvTjsOZn2vqDEk3DIMqVphA==";
+        private static readonly string PrimaryKey = "<Primary Key>";
         // The Cosmos client instance
         private CosmosClient cosmosClient;
         // The database we will create
