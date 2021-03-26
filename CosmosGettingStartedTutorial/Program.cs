@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
+using System.IO;
 
 namespace CosmosGettingStartedTutorial
 {
@@ -12,9 +15,9 @@ namespace CosmosGettingStartedTutorial
     public class Program
     {
         // The Azure Cosmos DB endpoint for running this sample.
-        private static readonly string EndpointUri = "<URI Endpoint>";
+        private static string EndpointUri = "";
         // The primary key for the Azure Cosmos account.
-        private static readonly string PrimaryKey = "<Primary Key>";
+        private static string PrimaryKey = "";
         // The Cosmos client instance
         private CosmosClient cosmosClient;
         // The database we will create
@@ -22,12 +25,21 @@ namespace CosmosGettingStartedTutorial
         // The container we will create.
         private Container container;
         // The name of the database and container we will create
-        private string databaseId = "FamilyDatabase";
-        private string containerId = "FamilyContainer";
+        private readonly string databaseId = "FamilyDatabase";
+        private readonly string containerId = "FamilyContainer";
 
         public static async Task Main(string[] args)
         {
             Console.WriteLine("Beginning operations...\n");
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false);
+
+            IConfiguration config = builder.Build();
+
+            EndpointUri = config.GetSection("CosmosDBKeys").GetSection("EndpointUri").Value;
+            PrimaryKey = config.GetSection("CosmosDBKeys").GetSection("PrimaryKey").Value;
 
             try
             {
